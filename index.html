@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索北屯之美 | Discover Beitun</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        amberGold: '#d97706',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- 頂部導覽列 Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-2">
+                    <span class="p-2 bg-brand-600 text-white rounded-xl shadow-md">
+                        <i class="fa-solid font-bold fa-mountain-sun text-xl"></i>
+                    </span>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">北屯之美 <span class="text-xs font-normal text-brand-600 border border-brand-500 rounded px-1.5 py-0.5 ml-1">臺中秘境</span></span>
+                </a>
+
+                <!-- 桌長導覽選單 DeskNav -->
+                <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                    <a href="#attractions" class="text-slate-600 hover:text-brand-600 transition">熱門景點</a>
+                    <a href="#food" class="text-slate-600 hover:text-brand-600 transition">在地美食</a>
+                    <a href="#trails" class="text-slate-600 hover:text-brand-600 transition">健行運動</a>
+                    <a href="#itinerary" class="text-slate-600 hover:text-brand-600 transition">一日遊推薦</a>
+                    <a href="#transport" class="text-slate-600 hover:text-brand-600 transition">交通指南</a>
+                </nav>
+
+                <!-- 收藏按鈕 / 手機選單開關 -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleFavoritesModal()" class="relative p-2 text-slate-600 hover:text-brand-600 focus:outline-none" title="我的口袋名單">
+                        <i class="fa-solid fa-heart text-xl text-rose-500"></i>
+                        <span id="fav-count" class="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold hidden">0</span>
+                    </button>
+
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 rounded-lg hover:bg-slate-100">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 手機版選單 Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2">
+            <a href="#attractions" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">熱門景點</a>
+            <a href="#food" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">在地美食</a>
+            <a href="#trails" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">健行運動</a>
+            <a href="#itinerary" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">一日遊推薦</a>
+            <a href="#transport" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-50">交通指南</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero 形象巨幕區域 -->
+        <section class="relative hero-bg text-white py-24 md:py-36 px-4">
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+                <span class="inline-block bg-brand-500/30 border border-brand-400 text-brand-200 px-4 py-1.5 rounded-full text-sm font-medium tracking-wide">
+                    🌲 探尋臺中的後花園與隱藏版滋味
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                    山光水色與美食漫遊<br><span class="text-brand-400">台中市北屯區</span>
+                </h1>
+                <p class="text-slate-200 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                    從大坑步道的芬多精，到歷史懷舊眷村；從排隊幾十年的古早點心，到隱身山林的景觀餐廳，帶您深入體驗北屯的多彩魅力。
+                </p>
+                
+                <!-- 快速搜尋 / 捷徑按鈕 -->
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <a href="#trails" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-person-hiking"></i> 探索健行步道
+                    </a>
+                    <a href="#food" class="bg-white/20 backdrop-blur-md hover:bg-white/30 text-white font-semibold px-6 py-3 rounded-xl shadow transition flex items-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> 發掘隱藏美食
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 景點介紹 Section -->
+        <section id="attractions" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight">精選北屯熱門景點</h2>
+                <p class="text-slate-600 mt-2">無論是踏青、人文巡禮還是拍美照打卡，北屯都能滿足您的需求。</p>
+                
+                <!-- 篩選標籤 -->
+                <div class="flex flex-wrap justify-center gap-2 mt-6" id="attract-filters">
+                    <button onclick="filterAttractions('all')" class="filter-btn active bg-brand-600 text-white px-4 py-1.5 rounded-full text-sm font-medium shadow-sm transition">全部</button>
+                    <button onclick="filterAttractions('nature')" class="filter-btn bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-1.5 rounded-full text-sm font-medium transition">自然綠意</button>
+                    <button onclick="filterAttractions('culture')" class="filter-btn bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-1.5 rounded-full text-sm font-medium transition">人文歷史</button>
+                    <button onclick="filterAttractions('photo')" class="filter-btn bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-1.5 rounded-full text-sm font-medium transition">浪漫打卡</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="attractions-grid">
+                <!-- 由 JavaScript 動態渲染景點卡片 -->
+            </div>
+        </section>
+
+        <!-- 隱藏版美食 Section -->
+        <section id="food" class="py-16 bg-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <span class="text-brand-600 font-bold text-sm tracking-widest uppercase">Gourmet Guide</span>
+                        <h2 class="text-3xl font-bold text-slate-900 tracking-tight mt-1">不為人知與在地人激推美食</h2>
+                        <p class="text-slate-600 mt-2">從古早味小吃、傳統黑粉圓到高質感景觀餐廳，饕客不能錯過的北屯地圖。</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="food-grid">
+                    <!-- 由 JavaScript 動態渲染美食卡片 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 運動、爬山與健行 Section -->
+        <section id="trails" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full uppercase">Outdoor & Sports</span>
+                <h2 class="text-3xl font-bold text-slate-900 tracking-tight mt-2">適合運動、爬山健行的場所</h2>
+                <p class="text-slate-600 mt-2">北屯擁有全台中最熱門的大坑步道群與優質自行車道，挑選適合你體力的路線吧！</p>
+            </div>
+
+            <!-- 健行與運動場所清單 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 大坑步道分級簡介 -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-shoe-prints text-brand-600"></i> 大坑 12 條登山步道系統
+                    </h3>
+                    <p class="text-slate-600 text-sm mb-6">大坑風景區素有台中後花園之稱，擁有 12 條難易度各異的步道，木棧道景致非常優美。</p>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-emerald-900">新手休閒級 (9號, 9-1號, 10號)</span>
+                                <span class="text-xs bg-emerald-200 text-emerald-800 font-semibold px-2 py-0.5 rounded">適合親子/樂活</span>
+                            </div>
+                            <p class="text-xs text-emerald-700">坡度較平緩，步道起點有活力的農夫市集，沿途設有觀景平台，爬完還能順道品嚐老芋仔芋圓。</p>
+                        </div>
+
+                        <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-blue-900">健行休閒級 (6號, 7號, 8號)</span>
+                                <span class="text-xs bg-blue-200 text-blue-800 font-semibold px-2 py-0.5 rounded">大眾適宜</span>
+                            </div>
+                            <p class="text-xs text-blue-700">環境幽靜，路程長度適中，適合假日全家親近自然與休閒運動。</p>
+                        </div>
+
+                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-amber-900">進階挑戰級 (1號, 2號, 3號, 4號, 5號)</span>
+                                <span class="text-xs bg-amber-200 text-amber-800 font-semibold px-2 py-0.5 rounded">考驗體力</span>
+                            </div>
+                            <p class="text-xs text-amber-700">最具特色的圓木木棧道！其中大坑 4 號步道有「軟腳坡」之稱，視野遼闊但頗具挑戰性；1號步道終點更有山林體能訓練場。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他運動場所推薦 -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center text-brand-600 mb-3">
+                            <i class="fa-solid fa-child-reaching text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-slate-900">大坑 1 號步道體能訓練場</h4>
+                        <p class="text-sm text-slate-600 mt-1">
+                            隱身於 1 號步道山林中的免費體能訓練場，設有多項木造闖關遊具與體能設施，非常適合大朋友小朋友體能挑戰！
+                        </p>
+                        <span class="inline-block mt-3 text-xs text-slate-400"><i class="fa-regular fa-clock mr-1"></i>每週四休園保養維護</span>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center text-sky-600 mb-3">
+                            <i class="fa-solid fa-bicycle text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-slate-900">旱溪自行車道</h4>
+                        <p class="text-sm text-slate-600 mt-1">
+                            沿著旱溪河岸設置的專用自行車道，途經海天橋與松竹路，平坦且車流少，晨昏來此騎單車或夜跑極為舒適。
+                        </p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 mb-3">
+                            <i class="fa-solid fa-tree text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-slate-900">南興公園 (萬坪公園)</h4>
+                        <p class="text-sm text-slate-600 mt-1">
+                            擁有廣大草坪、溜步道與羽球場，還有著名的「米奇樹」打卡地標，是慢跑、瑜珈與戶外運動熱點。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 一日遊推薦選單規劃器 Section -->
+        <section id="itinerary" class="py-16 bg-slate-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <h2 class="text-3xl font-bold tracking-tight">北屯一日遊客製行程</h2>
+                    <p class="text-slate-400 mt-2">選擇您的旅遊風格，獲得最佳路線規劃建議！</p>
+                </div>
+
+                <!-- 選擇類型 Tabs -->
+                <div class="flex justify-center space-x-2 border-b border-slate-800 pb-4 mb-8" id="itin-tabs">
+                    <button onclick="setItinerary('nature')" id="tab-nature" class="itin-tab px-4 py-2 rounded-lg font-medium text-sm bg-brand-600 text-white">🌿 芬多精親山路線</button>
+                    <button onclick="setItinerary('date')" id="tab-date" class="itin-tab px-4 py-2 rounded-lg font-medium text-sm bg-slate-800 text-slate-300 hover:bg-slate-700">💖 浪漫約會人文線</button>
+                    <button onclick="setItinerary('family')" id="tab-family" class="itin-tab px-4 py-2 rounded-lg font-medium text-sm bg-slate-800 text-slate-300 hover:bg-slate-700">👨‍👩‍👧 親子放電享美食</button>
+                </div>
+
+                <!-- 行程時間軸展示區域 -->
+                <div id="itinerary-content" class="max-w-3xl mx-auto">
+                    <!-- 由 JavaScript 動態更新 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 交通指南 Section -->
+        <section id="transport" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">交通資訊與建議</h2>
+                <p class="text-slate-600 mt-2">運用台中捷運綠線搭配公車或共享單車，輕鬆遨遊北屯。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                    <div class="text-brand-600 text-2xl font-bold mb-2"><i class="fa-solid fa-train-subway mr-2"></i>台中捷運綠線</div>
+                    <ul class="text-slate-600 text-sm space-y-2">
+                        <li><strong>北屯總站：</strong>可轉乘公車往大坑風景區。</li>
+                        <li><strong>舊社站：</strong>鄰近南興萬坪公園、旱溪單車道。</li>
+                        <li><strong>松竹站：</strong>與台鐵雙鐵共構，直達舊社公園。</li>
+                        <li><strong>四維國小站：</strong>徒步可達一德洋樓（林懋陽故居）。</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                    <div class="text-brand-600 text-2xl font-bold mb-2"><i class="fa-solid fa-bus mr-2"></i>公車網絡</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        搭乘台中市公車 15、51、66、85、270、271、276 路等，可直達大坑圓環、大坑 9 號步道起點或紙箱王園區。使用電子票證享台中市民 10 公里免費優惠。
+                    </p>
+                </div>
+
+                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                    <div class="text-brand-600 text-2xl font-bold mb-2"><i class="fa-solid fa-car mr-2"></i>自駕/騎車停車</div>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        大坑 9 號步道與 1 號步道皆設有免費或收費停車場。例假日人潮眾多，建議早晨 8:00 前抵達或多利用捷運轉乘前往。
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center items-center space-x-2 text-white font-bold text-xl mb-4">
+                <i class="fa-solid fa-mountain-sun text-brand-500"></i>
+                <span>探索北屯之美 Discover Beitun</span>
+            </div>
+            <p class="text-sm max-w-lg mx-auto mb-6">為您整理台中北屯最真實的在地風景、美食與健行資訊。歡迎部署發佈於 GitHub Pages。</p>
+            <p class="text-xs text-slate-500">&copy; <span id="year"></span> 探索北屯之美. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 我的最愛 Modal 彈窗 -->
+    <div id="fav-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative">
+            <button onclick="toggleFavoritesModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-heart text-rose-500"></i> 我的口袋名單
+            </h3>
+            <div id="fav-list" class="space-y-3 max-h-60 overflow-y-auto mb-4">
+                <!-- 口袋名單內容 -->
+            </div>
+            <button onclick="toggleFavoritesModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2 rounded-xl text-sm transition">關閉</button>
+        </div>
+    </div>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 設定當前年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 景點資料庫 Data
+        const attractions = [
+            {
+                id: 'att-1',
+                title: '大坑風景區 (9號/9-1號步道)',
+                category: 'nature',
+                tag: '自然健行',
+                desc: '台中市的後花園，9號步道坡度平緩親民，起點更有熱鬧的農友市集，非常適合闔家踏青。',
+                img: 'https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                id: 'att-2',
+                title: '一德洋樓 (林懋陽故居)',
+                category: 'culture',
+                tag: '歷史古蹟',
+                desc: '融合閩南三合院、日式木造與巴洛克式洋樓的獨特建築，內設藝文空間與精緻餐飲。',
+                img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                id: 'att-3',
+                title: '大坑情人橋',
+                category: 'photo',
+                tag: '浪漫約會',
+                desc: '粉紅色斜張橋身搭配強化玻璃橋面，夜晚點燈後與倒影形成夢幻心形，是約會聖地。',
+                img: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                id: 'att-4',
+                title: '臺中市眷村文物館',
+                category: 'culture',
+                tag: '懷舊眷村',
+                desc: '保留完整的北屯新村紅磚建築，重現早期眷村生活景貌，充滿濃濃復古文青風情。',
+                img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                id: 'att-5',
+                title: '南興公園 (萬坪公園米奇樹)',
+                category: 'photo',
+                tag: '親子綠地',
+                desc: '廣闊草地上的百年百年芒果樹外型宛如迪士尼米奇，秋冬季時落羽松步道極美。',
+                img: 'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=800&auto=format&fit=crop'
+            },
+            {
+                id: 'att-6',
+                title: '新都生態公園',
+                category: 'nature',
+                tag: '生態綠意',
+                desc: '以生態工法打造的親水公園，有水池餵魚與大片落羽松，是午後野餐散步最佳場域。',
+                img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop'
+            }
+        ];
+
+        // 隱藏美食資料庫 Data
+        const foods = [
+            {
+                id: 'food-1',
+                name: '阿坤黑粉圓',
+                type: '古早味冰品小吃',
+                desc: '在地幾十年老字號！顆粒超大超Q彈的黑粉圓，搭配特製黑糖水與各式刨料，消暑首選。',
+                badge: '在地老字號',
+                price: 'NT$ 40 - 70'
+            },
+            {
+                id: 'food-2',
+                name: '梁家肉圓',
+                type: '隱藏版銅板美食',
+                desc: '太原路上不起眼卻人氣爆棚的小攤！每天僅營業約3-4小時，皮Q肉紮實且淋醬極香。',
+                badge: '限量秒殺',
+                price: 'NT$ 45 - 60'
+            },
+            {
+                id: 'food-3',
+                name: '枯山円敷 YEN KARESAN',
+                type: '山林秘境日式庭園',
+                desc: '隱身在大坑深山的日式枯山水庭園餐廳，極具禪意氛圍，提供精緻早午餐與瓦煎燒甜點。',
+                badge: '網美美拍',
+                price: 'NT$ 350 - 600'
+            },
+            {
+                id: 'food-4',
+                name: '立偉麻醬館麵食',
+                type: '平價特色麵食',
+                desc: '招牌「一麵三吃」融合麻醬、花生醬與肉燥，桌上麻醬大方任加，是北屯人私藏愛店。',
+                badge: '高CP值推薦',
+                price: 'NT$ 50 - 100'
+            },
+            {
+                id: 'food-5',
+                name: 'Le Aqua 水相餐聚苑',
+                type: '極簡白色美學餐廳',
+                desc: '位於水湳經貿園區旁獨棟純白建築，結合藤編與地中海風格，約會慶生首選。',
+                badge: '浪漫約會',
+                price: 'NT$ 400 - 800'
+            },
+            {
+                id: 'food-6',
+                name: '老芋仔芋圓',
+                type: '大坑必吃甜點',
+                desc: '爬完大坑步道必吃的芋頭冰品！芋頭熬煮至鬆軟綿密，搭配Q彈芋圓與濃郁湯底。',
+                badge: '健行必吃',
+                price: 'NT$ 50 - 70'
+            }
+        ];
+
+        // 行程規劃器 Data
+        const itineraries = {
+            nature: [
+                { time: '08:30', title: '挑戰大坑 9 號 / 9-1 號步道健行', desc: '早晨登高遠眺台中市景，吸收滿滿芬多精' },
+                { time: '11:30', title: '品嚐大坑在地美食老芋仔芋圓', desc: '爬山後犒賞自己的最佳甜品' },
+                { time: '13:00', title: '大坑 1 號步道體能訓練場體驗', desc: '挑戰木造設施與體驗山林野趣' },
+                { time: '15:30', title: '新都生態公園漫步與看落羽松', desc: '湖畔野餐放空，感受悠閒午後' },
+                { time: '18:00', title: '眺高 STAY WITH MOUNTAIN 享用夜景晚餐', desc: '俯瞰北屯與台中城市璀璨夜景' }
+            ],
+            date: [
+                { time: '10:30', title: '一德洋樓（林懋陽故居）藝文漫遊', desc: '欣賞古今交融建築並拍出美照' },
+                { time: '12:30', title: 'Le Aqua 水相餐聚苑浪漫午餐', desc: '純白極簡風建築中享用精緻義大利料理' },
+                { time: '15:00', title: '南興萬坪公園打卡米奇樹', desc: '手牽手在寬廣綠地上散步拍照' },
+                { time: '17:30', title: '大坑粉紅情人橋浪漫夕陽', desc: '欣賞斜陽照射下的浪漫倒影' },
+                { time: '19:00', title: '枯山円敷享用精緻日式晚餐', desc: '享受深山禪意庭園的寧靜氛圍' }
+            ],
+            family: [
+                { time: '09:30', title: '臺中市眷村文物館懷舊體驗', desc: '帶小朋友體驗古早味玩具與復古街景' },
+                { time: '11:30', title: '立偉麻醬館麵食午餐', desc: '體驗特色一麵三吃與平價在地美味' },
+                { time: '13:30', title: '大坑紙箱王創意園區', desc: '乘坐紙火車、探索紙雕世界與溜滑梯' },
+                { time: '16:00', title: '北屯兒童公園放電', desc: '林間探索遊戲區與人工湖餵魚' },
+                { time: '18:00', title: '阿坤黑粉圓甜品點心', desc: '外帶超大黑粉圓冰做美味結尾' }
+            ]
+        };
+
+        // 收藏名單 State
+        let favorites = JSON.parse(localStorage.getItem('beitun_favs')) || [];
+
+        // 頁面載入初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAttractions('all');
+            renderFoods();
+            setItinerary('nature');
+            updateFavUI();
+
+            // 手機選單 toggle
+            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+        });
+
+        // 渲染景點列表
+        function renderAttractions(filterCategory) {
+            const container = document.getElementById('attractions-grid');
+            container.innerHTML = '';
+
+            const list = filterCategory === 'all' 
+                ? attractions 
+                : attractions.filter(a => a.category === filterCategory);
+
+            list.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition border border-slate-200/80 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-48 overflow-hidden bg-slate-200">
+                            <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover hover:scale-105 transition duration-500" loading="lazy">
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-slate-800 text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm">${item.tag}</span>
+                            <button onclick="toggleFav('${item.id}')" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-600 hover:text-rose-500 transition shadow-sm">
+                                <i class="${isFav ? 'fa-solid text-rose-500' : 'fa-regular'} fa-heart"></i>
+                            </button>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg text-slate-900 mb-2">${item.title}</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-2">
+                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台中 ' + item.title)}" target="_blank" rel="noopener" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-700">
+                            Google 地圖導航 <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 景點標籤篩選切換
+        function filterAttractions(cat) {
+            document.querySelectorAll('#attract-filters .filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('bg-slate-200', 'text-slate-700');
+            });
+            event.target.classList.remove('bg-slate-200', 'text-slate-700');
+            event.target.classList.add('bg-brand-600', 'text-white');
+            
+            renderAttractions(cat);
+        }
+
+        // 渲染美食列表
+        function renderFoods() {
+            const container = document.getElementById('food-grid');
+            container.innerHTML = '';
+
+            foods.forEach(item => {
+                const isFav = favorites.includes(item.id);
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between hover:border-brand-300 transition';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="text-xs font-semibold text-brand-600 bg-brand-50 border border-brand-200 px-2.5 py-0.5 rounded-full">${item.badge}</span>
+                                <h3 class="font-bold text-xl text-slate-900 mt-2">${item.name}</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">${item.type}</p>
+                            </div>
+                            <button onclick="toggleFav('${item.id}')" class="text-slate-400 hover:text-rose-500 transition p-1">
+                                <i class="${isFav ? 'fa-solid text-rose-500' : 'fa-regular'} fa-heart text-lg"></i>
+                            </button>
+                        </div>
+                        <p class="text-slate-600 text-sm mt-3 leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                        <span class="font-semibold text-slate-500">預算：${item.price}</span>
+                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('台中北屯 ' + item.name)}" target="_blank" rel="noopener" class="text-brand-600 font-semibold hover:underline">
+                            搜尋評價 <i class="fa-solid fa-arrow-up-right-from-square ml-0.5"></i>
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 切換行程規劃 Tabs
+        function setItinerary(type) {
+            document.querySelectorAll('.itin-tab').forEach(tab => {
+                tab.classList.remove('bg-brand-600', 'text-white');
+                tab.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            const activeTab = document.getElementById(`tab-${type}`);
+            if(activeTab) {
+                activeTab.classList.remove('bg-slate-800', 'text-slate-300');
+                activeTab.classList.add('bg-brand-600', 'text-white');
+            }
+
+            const container = document.getElementById('itinerary-content');
+            const data = itineraries[type];
+
+            let html = '<div class="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-slate-800">';
+            data.forEach((step, index) => {
+                html += `
+                    <div class="relative flex items-start space-x-4">
+                        <div class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs font-bold shrink-0 z-10 shadow-md">
+                            ${index + 1}
+                        </div>
+                        <div class="bg-slate-800/80 backdrop-blur-sm p-4 rounded-xl border border-slate-700/60 flex-grow">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-bold text-white text-base">${step.title}</h4>
+                                <span class="text-xs bg-slate-700 text-brand-300 px-2 py-0.5 rounded font-mono">${step.time}</span>
+                            </div>
+                            <p class="text-xs text-slate-400">${step.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // 收藏功能 Logic
+        function toggleFav(id) {
+            if(favorites.includes(id)) {
+                favorites = favorites.filter(item => item !== id);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('beitun_favs', JSON.stringify(favorites));
+            
+            // 重新渲染畫面以更新愛心狀態
+            const activeCat = document.querySelector('#attract-filters .bg-brand-600')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1] || 'all';
+            renderAttractions(activeCat);
+            renderFoods();
+            updateFavUI();
+        }
+
+        // 更新收藏 UI
+        function updateFavUI() {
+            const countElem = document.getElementById('fav-count');
+            countElem.textContent = favorites.length;
+            if (favorites.length > 0) {
+                countElem.classList.remove('hidden');
+            } else {
+                countElem.classList.add('hidden');
+            }
+            renderFavModalList();
+        }
+
+        // 打開/關閉收藏彈窗
+        function toggleFavoritesModal() {
+            const modal = document.getElementById('fav-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // 渲染口袋名單 Modal 內容
+        function renderFavModalList() {
+            const container = document.getElementById('fav-list');
+            if (favorites.length === 0) {
+                container.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">目前還沒有收藏任何景點或美食喔！</p>';
+                return;
+            }
+
+            let html = '';
+            favorites.forEach(id => {
+                const attrItem = attractions.find(a => a.id === id);
+                const foodItem = foods.find(f => f.id === id);
+                const item = attrItem || foodItem;
+
+                if (item) {
+                    const title = item.title || item.name;
+                    html += `
+                        <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="text-sm font-semibold text-slate-800">${title}</span>
+                            <button onclick="toggleFav('${id}')" class="text-slate-400 hover:text-rose-500 text-xs">
+                                移除
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
